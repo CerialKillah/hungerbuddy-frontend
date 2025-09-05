@@ -2,6 +2,7 @@ import { Grid, Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 import { getDate, getTime, postData } from "../../services/FetchNodeServices";
+import Swal from "sweetalert2";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -143,7 +144,25 @@ export default function BranchInterface() {
       };
 
       var response = await postData("branch/submit_branch", body);
-      alert(response.status);
+      if (response.status) {
+              Swal.fire({
+                position: "bottom",
+                icon: "success",
+                title: response.message,
+                showConfirmButton: false,
+                timer: 2000,
+                toast:true
+              });
+            } else {
+              Swal.fire({
+                position: "bottom",
+                icon: "error",
+                title: response.message,
+                showConfirmButton: false,
+                timer: 2000,
+                toast:true
+              });
+            }
     }
   };
 

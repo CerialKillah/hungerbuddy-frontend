@@ -4,13 +4,14 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import burger from "../../assets/burger.png";
 import { useState } from "react";
 import { getDate, getTime, postData } from "../../services/FetchNodeServices";
+import Swal from "sweetalert2";
 
 const useStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "center",
     width: "100%",
-    height: "100%",
+    minHeight: "100%",
   },
   box: {
     width: 600,
@@ -95,7 +96,25 @@ export default function CategoryInterface() {
       formData.append("userid", "xxxxx");
 
       var response = await postData("category/submit_category", formData);
-      alert(response.status);
+      if (response.status) {
+        Swal.fire({
+          position: "bottom",
+          icon: "success",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 2000,
+          toast:true
+        });
+      } else {
+        Swal.fire({
+          position: "bottom",
+          icon: "error",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 2000,
+          toast:true
+        });
+      }
     }
   };
 
